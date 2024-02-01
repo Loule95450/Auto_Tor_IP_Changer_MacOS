@@ -1,86 +1,82 @@
-# -*- coding: utf-8 -*-
-
 import time
 import os
 import subprocess
+import argparse
 
 
+def install_package(package_name, install_command):
+    try:
+        subprocess.check_output(f"which {package_name}", shell=True)
+    except subprocess.CalledProcessError:
+        print(f"[+] {package_name} is not installed !")
+        subprocess.check_output(install_command, shell=True)
+        print(f"[!] {package_name} is installed succesfully ")
 
 
-try:
-    check_pip3 = subprocess.check_output('dpkg -s python3-pip', shell=True)
-    if str('install ok installed') in str(check_pip3):
-        pass
-except subprocess.CalledProcessError:
-    print('[+] pip3 not installed')
-    subprocess.check_output('sudo apt update',shell=True)
-    subprocess.check_output('sudo apt install python3-pip -y', shell=True)
-    print('[!] pip3 installed succesfully')
+def install_python_module(module_name):
+    try:
+        __import__(module_name)
+    except ImportError:
+        print(f"[+] python3 {module_name} is not installed")
+        os.system(f"pip3 install {module_name}")
 
 
+def change_ip():
+    os.system("brew services restart tor")
+    print("[+] Your IP has been Changed")
 
-try:
 
-    import requests
-except Exception:
-    print('[+] python3 requests is not installed')
-    os.system('pip3 install requests')
-    os.system('pip3 install requests[socks]')
-    print('[!] python3 requests is installed ')
-try:
+install_package("tor", "brew install tor")
+install_python_module("requests")
 
-    check_tor = subprocess.check_output('which tor', shell=True)
-except subprocess.CalledProcessError:
+os.system("brew services start tor")
+time.sleep(3)
 
-    print('[+] tor is not installed !')
-    subprocess.check_output('sudo apt update',shell=True)
-    subprocess.check_output('sudo apt install tor -y',shell=True)
-    print('[!] tor is installed succesfully ')
+parser = argparse.ArgumentParser(description="Auto Tor IP Changer")
+parser.add_argument(
+    "-d", "--delay", type=int, default=60, help="Time to change IP in seconds"
+)
+parser.add_argument(
+    "-l",
+    "--loop",
+    type=int,
+    default=0,
+    help="How many time do you want to change your IP",
+)
+args = parser.parse_args()
+x, lin = args.delay, args.loop
 
-os.system("clear")
-def ma_ip():
-    url='https://www.myexternalip.com/raw'
-    get_ip= requests.get(url,proxies=dict(http='socks5://127.0.0.1:9050',https='socks5://127.0.0.1:9050'))
-    return get_ip.text
-
-def change():
-    os.system("service tor reload")
-    print ('[+] Your IP has been Changed to : '+str(ma_ip()))
-
-print('''\033[1;32;40m \n
+print(
+    """\033[1;32m \n
                 _          _______
      /\        | |        |__   __|
     /  \  _   _| |_ ___      | | ___  _ __
    / /\ \| | | | __/ _ \     | |/ _ \| '__|
   / ____ \ |_| | || (_) |    | | (_) | |
  /_/    \_\__,_|\__\___/     |_|\___/|_|
-                V 2.1
-from mrFD
-''')
-print("\033[1;40;31m http://facebook.com/ninja.hackerz.kurdish/\n")
+                V 3.1
+from mrFD & Loule for MacOS Compatability
+Check in https://check.torproject.org/ if you are using Tor IP
+"""
+)
+print("\033[1;31m https://loule.me/\n")
+print(
+    "\033[1;31m [+] You change your IP every "
+    + str(x)
+    + " seconds during "
+    + str(lin)
+    + " times\n"
+)
 
-os.system("service tor start")
-
-
-
-
-time.sleep(3)
-print("\033[1;32;40m change your  SOCKES to 127.0.0.1:9050 \n")
-os.system("service tor start")
-x = input("[+] time to change Ip in Sec [type=60] >> ")
-lin = input("[+] how many time do you want to change your ip [type=1000]for infinte ip change type [0] >>")
-if int(lin) ==int(0):
-
-	while True:
-		try:
-			time.sleep(int(x))
-			change()
-		except KeyboardInterrupt:
-
-		 	print('\nauto tor is closed ')
-		 	quit()
-
+if int(lin) == 0:
+    while True:
+        try:
+            change_ip()
+            time.sleep(int(x))
+        except KeyboardInterrupt:
+            print("\n[!] Exiting...")
+            quit()
 else:
-	for i in range(int(lin)):
-		    time.sleep(int(x))
-		    change()
+    for i in range(int(lin)):
+        time.sleep(int(x))
+        change_ip()

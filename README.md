@@ -1,32 +1,31 @@
-# Auto_Tor_IP_changer V 2.1
-change your Ip Address automatically  This tool based on tor project
+# Auto Tor IP Changer for MacOS V 3.0
+Change your Ip Address automatically  This tool based on tor project
 
 
-how to install this tools :
+### How to install this tools :
 
-* : requirements:
+* Requirements:
 
+  ```
   sudo apt-get install tor
   pip3 install requests[socks]
+  ```
   or just run autoTor it will install everything
 
-1: git clone https://github.com/FDX100/Auto_Tor_IP_changer.git
+### How to use this tools :
 
-2 : cd Auto_Tor_IP_changer
+1. git clone https://github.com/Loule95450/AutoTorIPChangerMacOS.git
 
-3 : python3 install.py
+2. cd AutoTorIPChangerMacOS
 
-4 : interminal type ( aut ) any where you want
-  
-5 : type time to change IP
+3. python3 install.py
 
-6: type how many time to change your ip 
+4. python3 autoTor.py -d [delay] -l [number of ip change] (default delay is 60 and number of ip change is infinite)
 
-*[0 to infinte IP change]
+5. go to your browser / mac  change sock proxy to 127.0.0.1:9050
+(If you use Chrome, go to [This Chrome extension](https://chrome.google.com/webstore/detail/odiakldnmmpjabkemfboijigageaelcn) and install it.
 
-6 : go to your browser / pc  change sock proxy to 127.0.0.1:9050
+6. BOOOOOOMM 
 
-7 : BOOOOOOMM 
-
-============
-http://facebook.com/ninja.hackerz.kurdish/
+---
+https://loule.me
