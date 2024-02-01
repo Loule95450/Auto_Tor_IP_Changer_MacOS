@@ -14,7 +14,7 @@ Change your Ip Address automatically  This tool based on tor project
 
 ### How to use this tools :
 
-1. git clone https://github.com/Loule95450/AutoTorIPChangerMacOS.git
+1. git clone https://github.com/Loule95450/Auto_Tor_IP_Changer_MacOS.git
 
 2. cd AutoTorIPChangerMacOS
 
